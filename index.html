@@ -46,68 +46,7 @@
       </div>
     </div>
 
-    <!-- Upcoming classes table: edit rows directly inside the table body -->
-    <h2>Upcoming Classes</h2>
-    <table border="1" cellpadding="6" cellspacing="0">
-      <thead>
-        <tr>
-          <th>Location</th>
-          <th>Topic</th>
-        </tr>
-      </thead>
-      <tbody id="classes-body">
-        <tr>
-          <td>New York</td>
-          <td>JavaScript &amp; jQuery</td>
-        </tr>
-        <tr>
-          <td>San Francisco</td>
-          <td>HTML &amp; CSS</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- Sign up form: edit label text and option values in the tags below -->
-    <h2>Sign Up!</h2>
-    <form id="signup-form" action="#" method="post">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" value="" />
-      <br /><br />
-
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" value="" />
-      <br /><br />
-
-      <label for="location">Location:</label>
-      <select id="location" name="location">
-        <option value="newyork">New York</option>
-        <option value="sanfrancisco">San Francisco</option>
-        <option value="columbus">Columbus</option>
-      </select>
-      <br /><br />
-
-      <fieldset style="border:0; padding:0; margin:0">
-        <legend>Gender:</legend>
-        <label><input type="radio" name="gender" value="female" /> Female</label>
-        <label><input type="radio" name="gender" value="male" /> Male</label>
-      </fieldset>
-      <br />
-
-      <label for="experience">Experience:</label>
-      <br />
-      <textarea id="experience" name="experience" rows="3" cols="40"></textarea>
-      <br /><br />
-
-      <button type="submit">Sign Up</button>
-    </form>
-
-    <!-- Social links: edit the URLs/text between the tags -->
-    <p style="margin-top:24px">
-      <a href="#">Twitter</a> |
-      <a href="#">Facebook</a> |
-      <a href="#">Flickr</a>
-    </p>
-
+    <!-- Minimal footer -->
     <footer style="margin-top:24px;">
       <p>&copy; <span id="year"></span> Your Company</p>
     </footer>
@@ -115,67 +54,6 @@
     <script>
       // small helper to set copyright year
       document.getElementById('year').textContent = new Date().getFullYear();
-
-      // Hobby add/remove logic
-      (function(){
-        const input = document.getElementById('hobby-input');
-        const addBtn = document.getElementById('add-hobby-btn');
-        const container = document.getElementById('hobbies');
-
-        function createChip(text){
-          const chip = document.createElement('div');
-          chip.className = 'hobby-chip';
-          chip.style.cssText = 'display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border:1px solid #999; border-radius:16px;';
-
-          const span = document.createElement('span');
-          span.textContent = text;
-
-          const btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'remove-hobby';
-          btn.setAttribute('aria-label', 'Remove ' + text);
-          btn.style.cssText = 'background:none;border:0;cursor:pointer;';
-          btn.textContent = '✕';
-          btn.addEventListener('click', function(){ container.removeChild(chip); });
-
-          chip.appendChild(span);
-          chip.appendChild(btn);
-          return chip;
-        }
-
-        addBtn.addEventListener('click', function(){
-          const val = input.value.trim();
-          if(!val) return;
-          container.appendChild(createChip(val));
-          input.value = '';
-          input.focus();
-        });
-
-        // allow Enter to add
-        input.addEventListener('keydown', function(e){
-          if(e.key === 'Enter'){
-            e.preventDefault();
-            addBtn.click();
-          }
-        });
-
-        // delegate existing remove buttons
-        container.querySelectorAll('.remove-hobby').forEach(function(b){
-          b.addEventListener('click', function(){
-            const chip = b.parentElement; container.removeChild(chip);
-          });
-        });
-
-        // expose a function to show hobbies in an alert
-        window.showHobbiesAlert = function(){
-          const items = Array.from(container.querySelectorAll('.hobby-chip span')).map(s => s.textContent.trim());
-          if(items.length === 0){
-            alert('No hobbies added yet.');
-            return;
-          }
-          alert('Hobbies:\n' + items.join('\n'));
-        };
-      })();
     </script>
 
   </body>
