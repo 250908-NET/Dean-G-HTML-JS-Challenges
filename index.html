@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Template - Editable</title>
+    <!-- NOTE: Stylesheet removed so page uses browser defaults like the provided screenshot.
+         Edit the content directly between tags below. -->
+  </head>
+  <body>
+
+    <!-- Image area: replace the src or edit the alt text between the tags -->
+    <div style="border:4px solid #000; width:520px; padding:12px; margin:12px 0; display:inline-block;">
+      <img src="Boots&cats24_2.jpg" alt="an image" style="max-width:100%; height:auto; display:block;" />
+      <!-- If you want plain text instead of an image, replace the <img> with: -->
+      <!-- <div>an image</div> -->
+    </div>
+
+    <!-- About section: edit the heading and paragraph text below -->
+    <h1>About</h1>
+    <p id="about-text" style="max-width:720px; margin:0 16px 16px 16px;">My name is Dean.  I am 37 years old, I'm originally from New York and still currently live here.  
+        Currently I am working for Revature training as a Full Stack .NET AI enabled developer and hope to begin work on a client project in the near future.  I love attending music festivals,
+    fitness and spending time with freinds.  Above is a picture taken from EDC Las Vegas, 2024. </p>
+
+    <!-- Hobbies: a flexible, editable list of hobby chips -->
+    <h2>Hobbies</h2>
+    <div id="hobbies-wrap" style="max-width:720px; margin:0 16px 16px 16px;">
+      <!-- controls to add a hobby -->
+      <div style="margin-bottom:8px; display:flex; gap:8px; align-items:center;">
+        <input id="hobby-input" type="text" placeholder="What do you like to do?" style="flex:1; padding:6px;" />
+        <button id="add-hobby-btn" type="button">Add</button>
+      </div>
+
+      <!-- flex container for hobby chips -->
+      <div id="hobbies" style="display:flex; flex-wrap:wrap; gap:8px;">
+        <!-- example chips; you can remove or edit these -->
+        <div class="hobby-chip" style="display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border:1px solid #999; border-radius:16px;">
+          <span>Fitness</span>
+          <button class="remove-hobby" aria-label="Remove Fitness" style="background:none;border:0;cursor:pointer;">✕</button>
+        </div>
+        <div class="hobby-chip" style="display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border:1px solid #999; border-radius:16px;">
+          <span>Movies</span>
+          <button class="remove-hobby" aria-label="Remove Movies" style="background:none;border:0;cursor:pointer;">✕</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upcoming classes table: edit rows directly inside the table body -->
+    <h2>Upcoming Classes</h2>
+    <table border="1" cellpadding="6" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Location</th>
+          <th>Topic</th>
+        </tr>
+      </thead>
+      <tbody id="classes-body">
+        <tr>
+          <td>New York</td>
+          <td>JavaScript &amp; jQuery</td>
+        </tr>
+        <tr>
+          <td>San Francisco</td>
+          <td>HTML &amp; CSS</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Sign up form: edit label text and option values in the tags below -->
+    <h2>Sign Up!</h2>
+    <form id="signup-form" action="#" method="post">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" value="" />
+      <br /><br />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" value="" />
+      <br /><br />
+
+      <label for="location">Location:</label>
+      <select id="location" name="location">
+        <option value="newyork">New York</option>
+        <option value="sanfrancisco">San Francisco</option>
+        <option value="columbus">Columbus</option>
+      </select>
+      <br /><br />
+
+      <fieldset style="border:0; padding:0; margin:0">
+        <legend>Gender:</legend>
+        <label><input type="radio" name="gender" value="female" /> Female</label>
+        <label><input type="radio" name="gender" value="male" /> Male</label>
+      </fieldset>
+      <br />
+
+      <label for="experience">Experience:</label>
+      <br />
+      <textarea id="experience" name="experience" rows="3" cols="40"></textarea>
+      <br /><br />
+
+      <button type="submit">Sign Up</button>
+    </form>
+
+    <!-- Social links: edit the URLs/text between the tags -->
+    <p style="margin-top:24px">
+      <a href="#">Twitter</a> |
+      <a href="#">Facebook</a> |
+      <a href="#">Flickr</a>
+    </p>
+
+    <footer style="margin-top:24px;">
+      <p>&copy; <span id="year"></span> Your Company</p>
+    </footer>
+
+    <script>
+      // small helper to set copyright year
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      // Hobby add/remove logic
+      (function(){
+        const input = document.getElementById('hobby-input');
+        const addBtn = document.getElementById('add-hobby-btn');
+        const container = document.getElementById('hobbies');
+
+        function createChip(text){
+          const chip = document.createElement('div');
+          chip.className = 'hobby-chip';
+          chip.style.cssText = 'display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border:1px solid #999; border-radius:16px;';
+
+          const span = document.createElement('span');
+          span.textContent = text;
+
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'remove-hobby';
+          btn.setAttribute('aria-label', 'Remove ' + text);
+          btn.style.cssText = 'background:none;border:0;cursor:pointer;';
+          btn.textContent = '✕';
+          btn.addEventListener('click', function(){ container.removeChild(chip); });
+
+          chip.appendChild(span);
+          chip.appendChild(btn);
+          return chip;
+        }
+
+        addBtn.addEventListener('click', function(){
+          const val = input.value.trim();
+          if(!val) return;
+          container.appendChild(createChip(val));
+          input.value = '';
+          input.focus();
+        });
+
+        // allow Enter to add
+        input.addEventListener('keydown', function(e){
+          if(e.key === 'Enter'){
+            e.preventDefault();
+            addBtn.click();
+          }
+        });
+
+        // delegate existing remove buttons
+        container.querySelectorAll('.remove-hobby').forEach(function(b){
+          b.addEventListener('click', function(){
+            const chip = b.parentElement; container.removeChild(chip);
+          });
+        });
+      })();
+    </script>
+
+  </body>
+</html>
