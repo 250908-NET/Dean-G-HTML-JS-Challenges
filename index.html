@@ -9,20 +9,20 @@
   </head>
   <body>
 
-    <!-- Image area: replace the src or edit the alt text between the tags -->
+    <!-- Main Image -->
     <div style="border:4px solid #000; width:520px; padding:12px; margin:12px 0; display:inline-block;">
       <img src="Boots&cats24_2.jpg" alt="an image" style="max-width:100%; height:auto; display:block;" />
       <!-- If you want plain text instead of an image, replace the <img> with: -->
       <!-- <div>an image</div> -->
     </div>
 
-    <!-- About section: edit the heading and paragraph text below -->
-    <h1>About</h1>
+    <!-- About me section -->
+    <h1>About Me</h1>
     <p id="about-text" style="max-width:720px; margin:0 16px 16px 16px;">My name is Dean.  I am 37 years old, I'm originally from New York and still currently live here.  
         Currently I am working for Revature training as a Full Stack .NET AI enabled developer and hope to begin work on a client project in the near future.  I love attending music festivals,
     fitness and spending time with freinds.  Above is a picture taken from EDC Las Vegas, 2024. </p>
 
-    <!-- Hobbies: a flexible, editable list of hobby chips -->
+    <!-- Hobbies -->
     <h2>Hobbies</h2>
     <div id="hobbies-wrap" style="max-width:720px; margin:0 16px 16px 16px;">
       <!-- controls to add a hobby -->
@@ -48,12 +48,73 @@
 
     <!-- Minimal footer -->
     <footer style="margin-top:24px;">
-      <p>&copy; <span id="year"></span> Your Company</p>
+      <p>&copy; <span id="year"></span> Dean's Week 4 Website</p>
     </footer>
 
     <script>
       // small helper to set copyright year
       document.getElementById('year').textContent = new Date().getFullYear();
+
+      // Hobby add/remove logic
+      (function(){
+        const input = document.getElementById('hobby-input');
+        const addBtn = document.getElementById('add-hobby-btn');
+        const container = document.getElementById('hobbies');
+
+        function createChip(text){
+          const chip = document.createElement('div');
+          chip.className = 'hobby-chip';
+          chip.style.cssText = 'display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border:1px solid #999; border-radius:16px;';
+
+          const span = document.createElement('span');
+          span.textContent = text;
+
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'remove-hobby';
+          btn.setAttribute('aria-label', 'Remove ' + text);
+          btn.style.cssText = 'background:none;border:0;cursor:pointer;';
+          btn.textContent = '✕';
+          btn.addEventListener('click', function(){ container.removeChild(chip); });
+
+          chip.appendChild(span);
+          chip.appendChild(btn);
+          return chip;
+        }
+
+        addBtn.addEventListener('click', function(){
+          const val = input.value.trim();
+          if(!val) return;
+          container.appendChild(createChip(val));
+          input.value = '';
+          input.focus();
+        });
+
+        // allow Enter to add
+        input.addEventListener('keydown', function(e){
+          if(e.key === 'Enter'){
+            e.preventDefault();
+            addBtn.click();
+          }
+        });
+
+        // delegate existing remove buttons
+        container.querySelectorAll('.remove-hobby').forEach(function(b){
+          b.addEventListener('click', function(){
+            const chip = b.parentElement; container.removeChild(chip);
+          });
+        });
+
+        // expose a function to show hobbies in an alert
+        window.showHobbiesAlert = function(){
+          const items = Array.from(container.querySelectorAll('.hobby-chip span')).map(s => s.textContent.trim());
+          if(items.length === 0){
+            alert('No hobbies added yet.');
+            return;
+          }
+          alert('Hobbies:\n' + items.join('\n'));
+        };
+      })();
     </script>
 
   </body>
