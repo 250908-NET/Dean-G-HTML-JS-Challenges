@@ -29,6 +29,7 @@
       <div style="margin-bottom:8px; display:flex; gap:8px; align-items:center;">
         <input id="hobby-input" type="text" placeholder="What do you like to do?" style="flex:1; padding:6px;" />
         <button id="add-hobby-btn" type="button">Add</button>
+        <button id="show-hobbies-btn" type="button" onclick="showHobbiesAlert()">Show Hobbies</button>
       </div>
 
       <!-- flex container for hobby chips -->
@@ -164,6 +165,16 @@
             const chip = b.parentElement; container.removeChild(chip);
           });
         });
+
+        // expose a function to show hobbies in an alert
+        window.showHobbiesAlert = function(){
+          const items = Array.from(container.querySelectorAll('.hobby-chip span')).map(s => s.textContent.trim());
+          if(items.length === 0){
+            alert('No hobbies added yet.');
+            return;
+          }
+          alert('Hobbies:\n' + items.join('\n'));
+        };
       })();
     </script>
 
