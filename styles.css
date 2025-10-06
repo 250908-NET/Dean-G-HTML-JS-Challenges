@@ -31,9 +31,56 @@ body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica
 
 .site-footer{padding:28px 0;color:var(--muted)}
 
+ #custom-toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #333;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: opacity 0.4s, transform 0.4s, visibility 0.4s;
+    }
+    #custom-toast.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
 @media (max-width:800px){
   .hero-inner{flex-direction:column-reverse;text-align:center}
   .hero-image img{max-width:92%;width:100%}
   .features{grid-template-columns:1fr}
   .main-nav{display:none}
 }
+
+/* Toast / custom notification styles */
+#toast-container {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 9999;
+  pointer-events: none;
+}
+.toast {
+  pointer-events: auto;
+  background: rgba(33,33,33,0.95);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.28);
+  transform: translateY(8px);
+  opacity: 0;
+  transition: opacity 240ms ease, transform 240ms ease;
+  max-width: 320px;
+  white-space: pre-wrap;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+

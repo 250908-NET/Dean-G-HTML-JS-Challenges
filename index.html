@@ -4,16 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Template - Editable</title>
-    <!-- NOTE: Stylesheet removed so page uses browser defaults like the provided screenshot.
-         Edit the content directly between tags below. -->
+  <!-- Stylesheet for page styling -->
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Edit the content directly between tags below. -->
   </head>
   <body>
 
     <!-- Main Image -->
     <div style="border:4px solid #000; width:520px; padding:12px; margin:12px 0; display:inline-block;">
-      <img src="Boots&cats24_2.jpg" alt="an image" style="max-width:100%; height:auto; display:block;" />
-      <!-- If you want plain text instead of an image, replace the <img> with: -->
-      <!-- <div>an image</div> -->
+      <!-- image is wrapped in an anchor so clicking it opens the provided link -->
+      <a href="https://www.youtube.com/watch?v=ewkMArBtG7E&pp=ygUYZWRjIGxhcyB2ZWdhcyBhZnRlcm1vdmll" target="_blank" rel="noopener noreferrer">
+        <img src="Boots&amp;cats24_2.jpg" alt="EDC LV '24" title="EDC LV '24" style="max-width:100%; height:auto; display:block;" />
+      </a>
     </div>
 
     <!-- About me section -->
@@ -43,8 +45,12 @@
           <span>Movies</span>
           <button class="remove-hobby" aria-label="Remove Movies" style="background:none;border:0;cursor:pointer;">✕</button>
         </div>
+          
       </div>
     </div>
+     <button onclick="showToast('This is a test toast!')">Show Toast</button>
+    <div id="custom-toast">  
+      </div>
 
     <!-- Minimal footer -->
     <footer style="margin-top:24px;">
@@ -104,16 +110,34 @@
             const chip = b.parentElement; container.removeChild(chip);
           });
         });
+        function showToast(message) {
+      const toast = document.getElementById('custom-toast');
+      toast.textContent = message;
+      toast.classList.add('show');
 
-        // expose a function to show hobbies in an alert
-        window.showHobbiesAlert = function(){
-          const items = Array.from(container.querySelectorAll('.hobby-chip span')).map(s => s.textContent.trim());
-          if(items.length === 0){
-            alert('No hobbies added yet.');
-            return;
-          }
-          alert('Hobbies:\n' + items.join('\n'));
-        };
+      // Hide after 3 seconds
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+   
+    
+    window.showHobbiesAlert = function () {
+      const items = Array.from(container.querySelectorAll('.hobby-chip span'))
+        .map(s => s.textContent.trim())
+        .filter(Boolean); // skip empty spans if any
+
+      if (items.length === 0) {
+        showToast('No hobbies added yet.');
+        return;
+      }
+
+      showToast('These are my hobbies:\n' + items.join(', '));
+    };
+
+        
+
+     
       })();
     </script>
 
