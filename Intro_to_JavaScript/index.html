@@ -8,15 +8,9 @@
     <input type="text" inputmode="numeric" id="numberInput" placeholder="Enter a number" />
     <button onclick="squareNumber()">Square up!</button>
 
-    <script>
-      function squareNumber() {
-        let number = document.getElementById("numberInput").value;
-        if(number.trim() === "") {
-          alert("Square up!");
-        } else {
-          alert(number + " squared is " + number * number);
-        }
-      }
-    </script>
+    <!-- load external script that defines squareNumber() -->
+    <script src="square.js"></script>
+  </body>
+</html>
   </body>
 </html
